@@ -31,13 +31,13 @@ export default class Navbar extends Component {
               </li>
 
               <li className="nav-item">
-                <Link className="nav-link" to={"/storage"}>
+                <Link className="nav-link" to={"/addStorage"}>
                   Storage
                 </Link>
               </li>
 
               <li className="nav-item">
-                <Link className="nav-link" to={"/parking"}>
+                <Link className="nav-link" to={"/addParking"}>
                   Parking
                 </Link>
               </li>

@@ -122,7 +122,7 @@ export default function Rental() {
                     <tr>
                       <td>{index + 1}</td>
                       <td>
-                        <img width={100} height={100} src={i.image} />
+                        <img width={150} alt="n.png" height={100} src={i.image} />
                       </td>
 
                       <td>{i.vehicleType}</td>

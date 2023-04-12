@@ -36,7 +36,7 @@ export default function AddVehicle() {
       method: "POST",
       crossDomain: true,
       headers: {
-        "Content-Type": "multipart/form-data",
+        "Content-Type": "application/json",
         Accept: "application/json",
         "Access-Control-Allow-Origin": "*",
       },
