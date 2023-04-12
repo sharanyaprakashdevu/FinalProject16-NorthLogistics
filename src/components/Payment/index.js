@@ -4,8 +4,13 @@ import Stripe from "react-stripe-checkout";
 import axios from "axios";
 
 const Payment = (props) => {
-  const { details, paymentSuccessCallback, paymentFailCallback, backTo } =
-    props;
+  const {
+    details,
+    paymentSuccessCallback,
+    paymentFailCallback,
+    backTo,
+    displayContent,
+  } = props;
 
   const chargeToCustomer = async (amount, token) => {
     try {
@@ -30,6 +35,7 @@ const Payment = (props) => {
 
   return (
     <div className="container">
+      {displayContent}
       <p>Procede to pays ${details.amount}.</p>
       <Stripe
         stripeKey="pk_test_51MvWN9BtsxxE0hvz0vR9IpehpzUIhKLPOjn2Y2zP3cLYdAAKZsSV4UhetXWKnsNzoc5fEr1zgxpZB7pU4J9oXltB00z7UnZ8sI"

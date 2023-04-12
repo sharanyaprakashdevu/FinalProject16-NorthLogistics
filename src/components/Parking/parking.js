@@ -69,9 +69,9 @@ export default function Parking() {
   };
 
   return (
-    <div>
+    <div className="p-2">
       <Navbar />
-      <div class="auth-inners">
+      <div class="p-2">
         <ViewParking />
 
         <Link className="btn btn-primary mt-2" to={"/addParking"}>

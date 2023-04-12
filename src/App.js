@@ -23,11 +23,12 @@ import Parking from "./components/Parking/parking";
 import AddParking from "./components/Parking/addParking";
 import AddStorage from "./components/Storage/addStorage";
 import Storage from "./components/Storage";
+import ViewBookings from "./components/vehicalBookings/viewBookings";
 
 function App() {
   //const isLoggedIn=window.localStorage.getItem("loggedIn");
   return (
-    <div>
+    <div className="main">
       <Router>
         <div className="App">
           <nav className="navbar navbar-expand-lg navbar-light fixed-top">
@@ -54,13 +55,11 @@ function App() {
               </div>
             </div>
           </nav>
-          <Routes>
-            <Route exact path="/userPage" element={<UserPage />} />
-          </Routes>
 
           <div className="auth-wrapper">
-            <div className="auth-inner">
               <Routes>
+                <Route exact path="/userPage" element={<UserPage />} />
+
                 <Route exact path="/" element={<Login />} />
                 <Route path="/sign-in" element={<Login />} />
                 <Route path="/sign-up" element={<SignUp />} />
@@ -79,8 +78,11 @@ function App() {
 
                 <Route path="/parking" element={<Parking />} />
                 <Route path="/addParking" element={<AddParking />} />
+
+                <Route path="/viewBookings" element={<ViewBookings />} />
+
+                <Route path="" exact element={null} />
               </Routes>
-            </div>
           </div>
         </div>
       </Router>

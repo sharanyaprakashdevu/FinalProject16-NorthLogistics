@@ -19,7 +19,7 @@ export default function Storage() {
   }, []);
 
   return (
-    <div>
+    <div className="col-md-8 mx-auto mt-4 p-2">
        <Navbar />
        <ViewStorage />
        <Link className="btn btn-primary mt-2" to={"/addStorage"}>

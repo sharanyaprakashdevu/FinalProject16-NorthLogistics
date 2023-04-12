@@ -70,7 +70,7 @@ export default function AddStorage() {
   };
 
   return (
-    <div>
+    <div className="col-md-6 mx-auto mt-4 p-2 card bg-black text-white">
       <Navbar />
 
       {isPaymentPage && (
@@ -92,7 +92,7 @@ export default function AddStorage() {
       )}
 
       {!isPaymentPage && !isInvoice && (
-        <div style={{ width: "auto" }}>
+        <div style={{ width: "auto" ,textAlign:'initial'}}>
           <form onSubmit={procedeToPay} style={{ width: "auto" }}>
             <h3>Storage</h3>
 

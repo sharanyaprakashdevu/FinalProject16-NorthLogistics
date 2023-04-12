@@ -402,7 +402,7 @@ app.post("/api/payment", async (req, res) => {
       console.log(customer, "-------");
       Stripe.charges.create(
         {
-          amount:amount,
+          amount: amount,
           currency: "cad",
           customer: customer.id,
           receipt_email: email,
@@ -410,7 +410,7 @@ app.post("/api/payment", async (req, res) => {
         { idempotencyKey }
       );
 
-      return {...customer,amount:amount};
+      return { ...customer, amount: amount };
     })
     .then((data) => {
       console.log(data, "#########");
@@ -422,19 +422,71 @@ app.post("/api/payment", async (req, res) => {
     });
 });
 
-const sendEmailNotification = (email, subject, text) => {
+//storage api
+require("./vehicalBooking");
+const vehicalBooking = mongoose.model("vehicalBooking");
+
+app.post("/book_vehical", async (req, res) => {
+  const { vehical, isPaymentDone, isBooked, token } = req.body;
+
+  const user = jwt.verify(token, JWT_SECRET);
+
+  const { email = "" } = user;
+
+  try {
+    await vehicalBooking.create({
+      vehical,
+      isPaymentDone,
+      isBooked,
+      email,
+    });
+
+    sendEmailNotification(
+      email,
+      "Vehical Booked Successfully",
+      "Hi User, A Vehical had been Booked. thanks for choosing North Logistics."
+    );
+
+    res.send({ status: "ok" });
+  } catch (error) {
+    res.status(400).json({ ...error });
+  }
+});
+
+// get booked vehical details
+app.get("/vehical_bookings", async (req, res) => {
+  const parsedUrl = url.parse(req.url);
+  const parsedQuery = querystring.parse(parsedUrl.query);
+  const token = parsedQuery.token;
+
+  if (!token) return res.status(401).json({ message: "authorize user" });
+
+  const user = jwt.verify(token, JWT_SECRET);
+
+  const { email = "" } = user;
+
+  try {
+    const vehical = await vehicalBooking.find({ email });
+    res.send({ status: "ok", data: vehical });
+  } catch (error) {
+    return res.status(400).json({ ...error });
+  }
+});
+
+const sendEmailNotification = (email, subject, text,debug=true) => {
+  if( debug) return {}
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
     secure: true, // use SSL
     auth: {
       user: "4lightspacebetweenus@gmail.com",
-      pass: "qfurlccurkhmivcs",
+      pass: "sxhdrxscbcepvpvc",
     },
   });
 
   const mailOptions = {
-    from: "NorthLogitech@gmail.com",
+    from: "4lightspacebetweenus@gmail.com",
     to: email,
     subject: subject,
     text: text,
@@ -461,6 +513,30 @@ const sendEmailNotification = (email, subject, text) => {
   //     .then((msg) => console.log(msg)) // logs response data
   //     .catch((err) => console.log(err)); // logs any error`;
 };
+
+app.get("/sent_test_mail",async (req,res)=>{
+  const parsedUrl = url.parse(req.url);
+  const parsedQuery = querystring.parse(parsedUrl.query);
+  const email = parsedQuery.email;
+
+  try{
+
+    sendEmailNotification(
+      email,
+      "Test",
+      "this is Test email"
+    );
+
+    return res.status(200).json({ message:"sended email" });
+
+  }
+  catch(error){
+
+    return res.status(400).json({ ...error });
+  }
+
+  
+})
 
 app.listen(5000, () => {
   console.log("Server Started");

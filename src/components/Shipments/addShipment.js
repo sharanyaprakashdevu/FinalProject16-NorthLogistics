@@ -85,11 +85,11 @@ export default function AddShipment() {
   };
 
   return (
-    <div className="mx-auto">
+    <div className="col-md-6 mx-auto card border p-3 bg-dark text-white mt-4">
       <Navbar />
 
       {!isPaymentPage && !isInvoice && (
-        <div style={{ width: "auto" }}>
+        <div style={{ width: "auto", textAlign: "initial" }}>
           <form onSubmit={procedeToPay} style={{ width: "auto" }}>
             <h3>Shipment</h3>
 

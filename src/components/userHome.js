@@ -9,6 +9,11 @@ class UserHome extends Component {
     window.location.href = "./sign-in";
   };
 
+  componentDidMount() {
+    const token = localStorage.getItem("token");
+    if (!token) window.location.replace("/sign-in");
+  }
+
   render() {
     const { userData } = this.props;
     return (
@@ -51,8 +56,7 @@ class UserHome extends Component {
                 <span className="fa-stack fa-4x">
                   <i className="fas fa-circle fa-stack-2x text-primary"></i>
                   <i className="fas fa-truck-arrow-right fa-stack-1x fa-inverse"></i>
-                  <img src="7.png" width={100} ></img>
-
+                  <img src="7.png" width={100}></img>
                 </span>
                 <h4 className="my-3">Shipments</h4>
                 <p className="text-muted">
@@ -65,8 +69,7 @@ class UserHome extends Component {
                 <span className="fa-stack fa-4x">
                   {/* <i className="fas fa-circle fa-stack-2x text-primary"></i>
                   <i className="fas fa-square-parking fa-stack-1x fa-inverse"></i> */}
-                  <img src="4.png" width={100} ></img>
-
+                  <img src="4.png" width={100}></img>
                 </span>
                 <h4 className="my-3">Vehical Parking</h4>
                 <p className="text-muted">
@@ -79,8 +82,8 @@ class UserHome extends Component {
                 <span className="fa-stack fa-4x">
                   {/* <i className="fas fa-circle fa-stack-2x text-primary"></i>
                   <i className="fas fa-warehouse fa-stack-1x fa-inverse"></i> */}
-                  
-                  <img src="3png.png" width={100} ></img>
+
+                  <img src="3png.png" width={100}></img>
                 </span>
                 <h4 className="my-3">Storage</h4>
                 <p className="text-muted">

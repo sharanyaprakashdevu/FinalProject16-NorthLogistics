@@ -9,7 +9,7 @@ export default function AdminHome({ userData }){
     };
 
 return(
-<div>
+<div className='admin-home'>
          <nav className="navbar navbar-expand-lg navbar-light fixed-top">
            <div className="container">
               <Link className="navbar-brand" to={'/sign-in'}>

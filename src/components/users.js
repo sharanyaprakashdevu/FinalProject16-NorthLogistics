@@ -89,10 +89,10 @@ return(
               </div>
            </nav>
            
-        <div className="auth-wrapper">
-        <div style={{width:"auto"}}>
+        <div className="auth-wrapper " >
+        <div className='col-md-6 mx-auto bg-dark text-white card p-2'>
             <h2>User Info</h2>
-            <table style={{width:500}}>
+            <table>
                 <tr>
                 <th>Name</th>
                 <th>Email</th>

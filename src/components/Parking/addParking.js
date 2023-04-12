@@ -82,12 +82,12 @@ export default function Parking() {
   };
 
   return (
-    <div>
+    <div className="col-md-6 p-2 mt-4 mx-auto pt-4">
       <Navbar />
 
       {!isPaymentPage && !isInvoice && (
         <div class="auth-inners">
-          <form onSubmit={procedeToPay} style={{ width: "auto" }}>
+          <form onSubmit={procedeToPay} style={{ width: "auto",textAlign:"initial" }}>
             <h3>Book Your Parking In Seconds !!! </h3>
 
             <div className="mb-3">

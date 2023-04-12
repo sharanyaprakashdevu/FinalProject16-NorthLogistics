@@ -20,7 +20,7 @@ export default function ViewParking() {
   }, []);
 
   return (
-    <div className="auth-wrapper">
+    <div className="p-2">
       <div style={{ width: "auto" }}>
         <h2>Vehicle Info</h2>
 

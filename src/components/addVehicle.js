@@ -102,7 +102,7 @@ export default function AddVehicle() {
         </div>
       </nav>
 
-      <form onSubmit={handleSubmit} style={{ width: "auto" }}>
+      <form onSubmit={handleSubmit} className="col-md-6 mx-auto mt-4 pt-3 p-4 card bg-dark text-white" style={{textAlign:"initial"}}>
         <h3>Add Vehicle</h3>
 
         <div className="mb-3">
