@@ -34,7 +34,7 @@ export default class Login extends Component {
         console.log(data, "userRegister");
 
         if (data.status == "ok") {
-          alert("login successfull");
+         // alert("login successfull");
           window.localStorage.setItem("token", data.data);
           window.localStorage.setItem("loggedIn", true);
           window.location.href = "/userPage";

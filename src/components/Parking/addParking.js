@@ -34,7 +34,7 @@ export default function Parking() {
 
   //Submit function
   const handleSubmit = (e) => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token","");
 
     console.log(
       fname,
