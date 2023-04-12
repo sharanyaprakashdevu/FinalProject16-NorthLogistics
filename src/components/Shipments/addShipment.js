@@ -5,6 +5,7 @@ import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import ConfirmShipment from "../confirmShipment";
 import Navbar from "../NavBar";
 import Payment from "../Payment";
+import Invoice from "../Invoice";
 //import React from 'react'
 //import Select from 'react-select'
 
@@ -16,16 +17,7 @@ export default function AddShipment() {
   const [addressTo, setaddressTo] = useState("");
   const [shipmentType, setshipmentType] = useState(false);
   const [selectedShip, setSelectedShip] = useState("");
-  const options = [
-    "",
-    "",
-    "",
-    "Boxes/Bags",
-    "Pallets",
-    "Machinery",
-    "Containers",
-    "Box",
-  ];
+  const options = ["Boxes/Bags", "Pallets", "Machinery", "Containers", "Box"];
 
   const [serviceType, setserviceType] = useState(false);
   const [selectedService, setSelectedService] = useState("");
@@ -39,26 +31,24 @@ export default function AddShipment() {
 
   const [dimensions, setdimensions] = useState("");
   const [isPaymentPage, setIsPaymentPage] = useState(false);
+  const [isInvoice, setInvoice] = useState(false);
+  const [invoiceData, setInvoiceData] = useState({});
   //const [additional,setadditional]=useState("")
 
   //procede to pay
   const procedeToPay = (e) => {
     e.preventDefault();
 
-    setIsPaymentPage(true);
-  };
-
-  //Submit function
-  const handleSubmit = (e) => {
-    // e.preventDefault();
-
-    // console.log(fname,phone,addressFrom,addressTo,selectedShip,selectedService,dimensions);
-
     if (!selectedService && !selectedShip) {
       alert("please select Service or select Ship");
       return;
     }
 
+    setIsPaymentPage(true);
+  };
+
+  //Submit function
+  const handleSubmit = (e) => {
     const token = localStorage.getItem("token", "");
 
     fetch("http://localhost:5000/shipment_register", {
@@ -87,9 +77,9 @@ export default function AddShipment() {
         if (data.status == "ok") {
           alert("Shipment details added successfully");
           //window.localStorage.setItem("token",data.data);
-          window.location.href = "./confirmShipment";
+          // window.location.href = "./confirmShipment";
         } else {
-          alert("Already Exist");
+          alert("There is an error please try later");
         }
       });
   };
@@ -98,7 +88,7 @@ export default function AddShipment() {
     <div className="mx-auto">
       <Navbar />
 
-      {!isPaymentPage && (
+      {!isPaymentPage && !isInvoice && (
         <div style={{ width: "auto" }}>
           <form onSubmit={procedeToPay} style={{ width: "auto" }}>
             <h3>Shipment</h3>
@@ -113,8 +103,11 @@ export default function AddShipment() {
                 value={fname}
                 //access values
                 onChange={(e) => {
-                  const regex = /^[a-zA-Z]+$/;
-                  if (regex.test(e.target.value)) setfname(e.target.value);
+                  const regex = /^[a-zA-Z\s]+$/;
+                  const val = e.target.value;
+                  if (regex.test(val)) setfname(val);
+                  if (val.length == 0 && e.nativeEvent.data == null)
+                    setfname("");
                 }}
               />
             </div>
@@ -170,7 +163,7 @@ export default function AddShipment() {
                 <FontAwesomeIcon icon={faCaretDown} />
               </div>
               {shipmentType && (
-                <div className="dropdown-content">
+                <div className="dropdown-content" style={{ zIndex: 99 }}>
                   {options.map((option) => (
                     <div
                       onClick={(e) => {
@@ -197,7 +190,7 @@ export default function AddShipment() {
                 <FontAwesomeIcon icon={faCaretDown} />
               </div>
               {serviceType && (
-                <div className="dropdown-content">
+                <div className="dropdown-content" style={{ zIndex: 99 }}>
                   {services.map((option) => (
                     <div
                       onClick={(e) => {
@@ -236,9 +229,27 @@ export default function AddShipment() {
 
       {isPaymentPage && (
         <Payment
-          procedeToPay={handleSubmit}
+          details={{ amount: Math.round(Math.random() * 100) }}
           backTo={() => {
             setIsPaymentPage(false);
+          }}
+          paymentSuccessCallback={(data) => {
+            handleSubmit();
+            setInvoiceData(data);
+            setInvoice(true);
+            setIsPaymentPage(false);
+          }}
+          paymentFailCallback={(err) => {
+            window.location.replace("./addShipment");
+          }}
+        />
+      )}
+
+      {isInvoice && (
+        <Invoice
+          invoice={invoiceData}
+          callback={() => {
+            window.location.replace("./addShipment");
           }}
         />
       )}

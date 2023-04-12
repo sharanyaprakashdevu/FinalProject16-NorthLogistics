@@ -5,6 +5,14 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const formData = require("form-data");
 const Mailgun = require("mailgun.js");
+const stripe = require("stripe");
+const url = require("url");
+const querystring = require("querystring");
+
+const Stripe = stripe(
+  "sk_test_51MvWN9BtsxxE0hvzc4BN27Ph141rhbvBvioc1SeULciy42wXEjfYFodlxqyyJw38pVGOvuNLfF9gcFoe83JkTMun00SkSBU3ti"
+);
+const { v4: uuidv4 } = require("uuid");
 
 app.use(cors());
 
@@ -209,6 +217,8 @@ app.post("/shipment_register", async (req, res) => {
 
   const { email = "" } = user;
 
+  if (!email) return res.status(401).json({ message: "authorize user" });
+
   try {
     await Shipment.create({
       fname,
@@ -218,6 +228,7 @@ app.post("/shipment_register", async (req, res) => {
       selectedShip,
       selectedService,
       dimensions,
+      email,
     });
 
     sendEmailNotification(
@@ -228,15 +239,25 @@ app.post("/shipment_register", async (req, res) => {
 
     res.send({ status: "ok" });
   } catch (error) {
-    res.send({ status: "error1" });
+    res.send({ status: error });
   }
 });
 
 //fetch shipment details
 app.get("/getShipmentDetails", async (req, res) => {
-  const { id } = req.body;
+  const parsedUrl = url.parse(req.url);
+  const parsedQuery = querystring.parse(parsedUrl.query);
+  const token = parsedQuery.token;
+
+  console.log(token);
+
+  if (!token) return res.status(401).json({ message: "authorize user" });
+
+  const user = jwt.verify(token, JWT_SECRET);
+
+  const { email = "" } = user;
   try {
-    const shipmentDetails = await Shipment.find();
+    const shipmentDetails = await Shipment.find({ email: email });
     res.send({ status: "ok", data: shipmentDetails });
   } catch (error) {
     console.log(error);
@@ -270,6 +291,7 @@ app.post("/storage_register", async (req, res) => {
       dimensions,
       storageDate,
       storageDuration,
+      email,
     });
 
     sendEmailNotification(
@@ -287,8 +309,18 @@ app.post("/storage_register", async (req, res) => {
 //fetch storage details
 app.get("/getStorageDetails", async (req, res) => {
   //const {userid} =req.body;
+  const parsedUrl = url.parse(req.url);
+  const parsedQuery = querystring.parse(parsedUrl.query);
+  const token = parsedQuery.token;
+
+  if (!token) return res.status(401).json({ message: "authorize user" });
+
+  const user = jwt.verify(token, JWT_SECRET);
+
+  const { email = "" } = user;
+
   try {
-    const storageDetails = await Storage.find({});
+    const storageDetails = await Storage.find({ email: email });
     res.send({ status: "ok", data: storageDetails });
   } catch (error) {
     console.log(error);
@@ -324,6 +356,7 @@ app.post("/park_register", async (req, res) => {
       vehicleType,
       parkingDate,
       parkingDuration,
+      email,
     });
     sendEmailNotification(
       email,
@@ -340,13 +373,53 @@ app.post("/park_register", async (req, res) => {
 
 //fetch park details
 app.get("/getParkDetail", async (req, res) => {
-  const { userid } = req.body;
+  const parsedUrl = url.parse(req.url);
+  const parsedQuery = querystring.parse(parsedUrl.query);
+  const token = parsedQuery.token;
+
+  if (!token) return res.status(401).json({ message: "authorize user" });
+
+  const user = jwt.verify(token, JWT_SECRET);
+
+  const { email = "" } = user;
+
   try {
-    const parkDetail = await Parking.find({});
+    const parkDetail = await Parking.find({ email });
     res.send({ status: "ok", data: parkDetail });
   } catch (error) {
     console.log(error);
   }
+});
+
+app.post("/api/payment", async (req, res) => {
+  const { token, amount, email } = req.body;
+
+  const idempotencyKey = uuidv4();
+
+  return Stripe.customers
+    .create({ email: email, source: token })
+    .then((customer) => {
+      console.log(customer, "-------");
+      Stripe.charges.create(
+        {
+          amount:amount,
+          currency: "cad",
+          customer: customer.id,
+          receipt_email: email,
+        },
+        { idempotencyKey }
+      );
+
+      return {...customer,amount:amount};
+    })
+    .then((data) => {
+      console.log(data, "#########");
+      res.status(200).json(data);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(400).json(err);
+    });
 });
 
 const sendEmailNotification = (email, subject, text) => {

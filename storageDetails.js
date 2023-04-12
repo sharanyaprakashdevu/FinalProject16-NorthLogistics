@@ -8,7 +8,7 @@ const StoragetDetailsSchema=new mongoose.Schema(
       dimensions:String,
       storageDate:Date,
       storageDuration:String,
-      
+      email:String,
       
     },
     {

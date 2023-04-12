@@ -4,7 +4,8 @@ export default function ViewStorage() {
   const [data, setData] = useState([]);
   const [allImage, setAllImage] = useState("");
   useEffect(() => {
-    fetch("http://localhost:5000/getStorageDetails", {
+    const token = localStorage.getItem("token") || ""
+    fetch("http://localhost:5000/getStorageDetails?token="+token, {
       method: "GET",
     })
       .then((res) => res.json())

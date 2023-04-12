@@ -6,9 +6,10 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 require("./addParking");
 export default function ViewParking() {
   const [data, setData] = useState([]);
+  const token = localStorage.getItem("token") || "";
 
   useEffect(() => {
-    fetch("http://localhost:5000/getParkDetail", {
+    fetch("http://localhost:5000/getParkDetail?token=" + token, {
       method: "GET",
     })
       .then((res) => res.json())

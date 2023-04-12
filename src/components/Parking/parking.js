@@ -61,7 +61,7 @@ export default function Parking() {
         if (data.status == "ok") {
           alert("Parking details added successfully");
           //window.localStorage.setItem("token",data.data);
-          window.location.href = "./viewParking";
+          window.location.href = "./parking";
         } else {
           alert("Already Exist");
         }

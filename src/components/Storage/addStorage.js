@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import Navbar from "../NavBar";
 import Payment from "../Payment";
+import Invoice from "../Invoice";
 //import {DateRangePickerComponent} from '@syncfusion/ej2-react-calendars';
 
 export default function AddStorage() {
@@ -19,21 +20,21 @@ export default function AddStorage() {
   const [storageDuration, setstorageDuration] = useState("");
   const [isPaymentPage, setIsPaymentPage] = useState(false);
 
+  const [isInvoice, setInvoice] = useState(false);
+  const [invoiceData, setInvoiceData] = useState({});
 
-   //procede to pay
-   const procedeToPay = (e) => {
+  //procede to pay
+  const procedeToPay = (e) => {
     e.preventDefault();
     if (!storageType) {
       alert("Please select storage type");
-      return
+      return;
     }
     setIsPaymentPage(true);
   };
 
   //Submit function
   const handleSubmit = (e) => {
-  
-
     const token = localStorage.getItem("token", "");
 
     fetch("http://localhost:5000/storage_register", {
@@ -61,7 +62,7 @@ export default function AddStorage() {
         if (data.status == "ok") {
           alert("Storage details added successfully");
           //window.localStorage.setItem("token",data.data);
-          window.location.href = "./storage";
+          // window.location.href = "./storage";
         } else {
           alert("Already Exist");
         }
@@ -74,14 +75,23 @@ export default function AddStorage() {
 
       {isPaymentPage && (
         <Payment
-          procedeToPay={handleSubmit}
+          details={{ amount: Math.round(Math.random() * 100) }}
           backTo={() => {
             setIsPaymentPage(false);
+          }}
+          paymentSuccessCallback={(data) => {
+            handleSubmit();
+            setInvoiceData(data);
+            setInvoice(true);
+            setIsPaymentPage(false);
+          }}
+          paymentFailCallback={(err) => {
+            window.location.replace("./storage");
           }}
         />
       )}
 
-      {!isPaymentPage && (
+      {!isPaymentPage && !isInvoice && (
         <div style={{ width: "auto" }}>
           <form onSubmit={procedeToPay} style={{ width: "auto" }}>
             <h3>Storage</h3>
@@ -96,8 +106,11 @@ export default function AddStorage() {
                 //access values
                 value={fname}
                 onChange={(e) => {
-                  const regex = /^[a-zA-Z]+$/;
-                  if (regex.test(e.target.value)) setfname(e.target.value);
+                  const regex = /^[a-zA-Z\s]+$/;
+                  const val = e.target.value;
+                  if (regex.test(val)) setfname(val);
+                  if (val.length == 0 && e.nativeEvent.data == null)
+                    setfname("");
                 }}
               />
             </div>
@@ -190,6 +203,15 @@ export default function AddStorage() {
             </div>
           </form>
         </div>
+      )}
+
+      {isInvoice && (
+        <Invoice
+          invoice={invoiceData}
+          callback={() => {
+            window.location.replace("./storage");
+          }}
+        />
       )}
     </div>
   );

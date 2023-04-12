@@ -36,7 +36,7 @@ return(
                   </li>
   
                   <li className="nav-item">
-                    <Link className="nav-link" to={'/viewParking'}>
+                    <Link className="nav-link" to={'/parking'}>
                       Parking
                     </Link>
                   </li>
