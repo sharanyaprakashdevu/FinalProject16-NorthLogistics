@@ -17,7 +17,7 @@ export default function ViewStorage() {
   }, []);
 
   return (
-    <div>
+    <div className="container">
       <div style={{ width: "auto" }}>
         <h2>Storage Info</h2>
         <table className="table">

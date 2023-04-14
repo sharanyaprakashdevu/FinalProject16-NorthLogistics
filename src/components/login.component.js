@@ -48,7 +48,7 @@ export default class Login extends Component {
     return (
       <div className="container mt-4">
         <div
-          className="col-md-6 p-4 card bg-dark mx-auto text-white"
+          className="col-md-4 p-4 card bg-dark mx-auto text-white"
           style={{ marginTop: "100px" }}
         >
           <form onSubmit={this.handleSubmit} style={{ textAlign: "initial" }}>

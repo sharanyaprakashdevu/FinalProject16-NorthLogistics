@@ -396,30 +396,38 @@ app.post("/api/payment", async (req, res) => {
 
   const idempotencyKey = uuidv4();
 
-  return Stripe.customers
-    .create({ email: email, source: token })
-    .then((customer) => {
-      console.log(customer, "-------");
-      Stripe.charges.create(
-        {
-          amount: amount,
-          currency: "cad",
-          customer: customer.id,
-          receipt_email: email,
-        },
-        { idempotencyKey }
-      );
+  try{
 
-      return { ...customer, amount: amount };
-    })
-    .then((data) => {
-      console.log(data, "#########");
-      res.status(200).json(data);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(400).json(err);
-    });
+    return Stripe.customers
+      .create({ email: email, source: token })
+      .then((customer) => {
+        console.log(customer, "-------");
+        Stripe.charges.create(
+          {
+            amount: amount,
+            currency: "cad",
+            customer: customer.id,
+            receipt_email: email,
+          },
+          { idempotencyKey }
+        );
+  
+        return { ...customer, amount: amount };
+      })
+      .then((data) => {
+        console.log(data, "#########");
+        return res.status(200).json(data);
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(400).json(err);
+      });
+  }
+  catch(err){
+    return res.status(400).json(err);
+
+  }
+
 });
 
 //storage api
@@ -473,7 +481,7 @@ app.get("/vehical_bookings", async (req, res) => {
   }
 });
 
-const sendEmailNotification = (email, subject, text,debug=true) => {
+const sendEmailNotification = (email, subject, text,debug=false) => {
   if( debug) return {}
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",

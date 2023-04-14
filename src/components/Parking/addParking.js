@@ -34,7 +34,7 @@ export default function Parking() {
 
   //Submit function
   const handleSubmit = (e) => {
-    const token = localStorage.getItem("token","");
+    const token = localStorage.getItem("token", "");
 
     console.log(
       fname,
@@ -82,143 +82,148 @@ export default function Parking() {
   };
 
   return (
-    <div className="col-md-6 p-2 mt-4 mx-auto pt-4">
-      <Navbar />
+    <div className="container">
+      <div className="col-md-6 p-4 card card-dark bg-dark text-white mx-auto pt-4" style={{marginTop:"50px"}}>
+        <Navbar />
 
-      {!isPaymentPage && !isInvoice && (
-        <div class="auth-inners">
-          <form onSubmit={procedeToPay} style={{ width: "auto",textAlign:"initial" }}>
-            <h3>Book Your Parking In Seconds !!! </h3>
+        {!isPaymentPage && !isInvoice && (
+          <div class="auth-inners">
+            <form
+              onSubmit={procedeToPay}
+              style={{ width: "auto", textAlign: "initial" }}
+            >
+              <h3>Book Your Parking In Seconds !!! </h3>
 
-            <div className="mb-3">
-              <label>Name </label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="First name"
-                required
-                //access values
-                value={fname}
-                onChange={(e) => {
-                  const regex = /^[a-zA-Z\s]+$/;
-                  const val = e.target.value;
-                  if (regex.test(val)) setfname(val);
-                  if (val.length == 0 && e.nativeEvent.data == null)
-                    setfname("");
-                }}
-              />
-            </div>
+              <div className="mb-3">
+                <label>Name </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="First name"
+                  required
+                  //access values
+                  value={fname}
+                  onChange={(e) => {
+                    const regex = /^[a-zA-Z\s]+$/;
+                    const val = e.target.value;
+                    if (regex.test(val)) setfname(val);
+                    if (val.length == 0 && e.nativeEvent.data == null)
+                      setfname("");
+                  }}
+                />
+              </div>
 
-            <div className="mb-3">
-              <label>Phone Number</label>
-              <input
-                type="phone"
-                className="form-control"
-                required
-                placeholder="Mobile Number"
-                value={phone}
-                onChange={(e) => {
-                  const phoneRegex = /^[0-9]+$/;
-                  if (phoneRegex.test(e.target.value) && phone.length <= 9)
-                    setphone(e.target.value);
-                }}
-              />
-            </div>
+              <div className="mb-3">
+                <label>Phone Number</label>
+                <input
+                  type="phone"
+                  className="form-control"
+                  required
+                  placeholder="Mobile Number"
+                  value={phone}
+                  onChange={(e) => {
+                    const phoneRegex = /^[0-9]+$/;
+                    if (phoneRegex.test(e.target.value) && phone.length <= 9)
+                      setphone(e.target.value);
+                  }}
+                />
+              </div>
 
-            <div className="mb-3">
-              <label>Vehicle Name</label>
-              <input
-                type="text"
-                className="form-control"
-                required
-                placeholder="Vehicle Name"
-                onChange={(e) => setvehicleName(e.target.value)}
-              />
-            </div>
+              <div className="mb-3">
+                <label>Vehicle Name</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  required
+                  placeholder="Vehicle Name"
+                  onChange={(e) => setvehicleName(e.target.value)}
+                />
+              </div>
 
-            <div className="mb-3">
-              <label>Vehicle Number</label>
-              <input
-                type="text"
-                className="form-control"
-                required
-                placeholder="Vehicle Number"
-                onChange={(e) => setvehicleNumber(e.target.value)}
-              />
-            </div>
+              <div className="mb-3">
+                <label>Vehicle Number</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  required
+                  placeholder="Vehicle Number"
+                  onChange={(e) => setvehicleNumber(e.target.value)}
+                />
+              </div>
 
-            <div className="mb-3">
-              <label>Vehicle Type</label>
-              <input
-                type="text"
-                className="form-control"
-                required
-                placeholder="Vehivle Type"
-                onChange={(e) => setvehicleType(e.target.value)}
-              />
-            </div>
+              <div className="mb-3">
+                <label>Vehicle Type</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  required
+                  placeholder="Vehivle Type"
+                  onChange={(e) => setvehicleType(e.target.value)}
+                />
+              </div>
 
-            <div className="mb-3">
-              <label>Parking Date</label>
-              <input
-                type="date"
-                className="form-control"
-                required
-                placeholder="Parking Date"
-                onChange={(e) => setparkingDate(e.target.value)}
-              />
-            </div>
+              <div className="mb-3">
+                <label>Parking Date</label>
+                <input
+                  type="date"
+                  className="form-control"
+                  required
+                  placeholder="Parking Date"
+                  onChange={(e) => setparkingDate(e.target.value)}
+                />
+              </div>
 
-            <div className="mb-3">
-              <label>Parking Duration in minutes</label>
-              <input
-                type="number"
-                className="form-control"
-                placeholder="Parking Duration"
-                required
-                min={0}
-                max={240}
-                onChange={(e) => setparkingDuration(e.target.value)}
-              />
-            </div>
+              <div className="mb-3">
+                <label>Parking Duration in minutes</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  placeholder="Parking Duration"
+                  required
+                  min={0}
+                  max={240}
+                  onChange={(e) => setparkingDuration(e.target.value)}
+                />
+              </div>
 
-            <div className="d-grid">
-              <button type="submit" className="btn btn-primary">
-                Procede to pay
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
+              <div className="d-grid">
+                <button type="submit" className="btn btn-primary">
+                  Procede to pay
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
 
-      {isPaymentPage && (
-        <Payment
-          details={{
-            amount: Math.random().toFixed(2) * 1.2 * parkingDuration,
-          }}
-          backTo={() => {
-            setIsPaymentPage(false);
-          }}
-          paymentSuccessCallback={(data) => {
-            handleSubmit();
-            setInvoiceData(data);
-            setInvoice(true);
-            setIsPaymentPage(false);
-          }}
-          paymentFailCallback={(err) => {
-            window.location.replace("./parking");
-          }}
-        />
-      )}
+        {isPaymentPage && (
+          <Payment
+            details={{
+              amount: Math.random().toFixed(2) * 1.2 * parkingDuration,
+            }}
+            backTo={() => {
+              setIsPaymentPage(false);
+            }}
+            paymentSuccessCallback={(data) => {
+              handleSubmit();
+              setInvoiceData(data);
+              setInvoice(true);
+              setIsPaymentPage(false);
+            }}
+            paymentFailCallback={(err) => {
+              window.location.replace("./parking");
+            }}
+          />
+        )}
 
-      {isInvoice && (
-        <Invoice
-          invoice={invoiceData}
-          callback={() => {
-            window.location.replace("./parking");
-          }}
-        />
-      )}
+        {isInvoice && (
+          <Invoice
+            invoice={invoiceData}
+            callback={() => {
+              window.location.replace("./parking");
+            }}
+          />
+        )}
+      </div>
     </div>
   );
 }

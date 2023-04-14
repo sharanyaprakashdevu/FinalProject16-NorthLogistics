@@ -51,7 +51,7 @@ export default function SignUp() {
   return (
     <div className="container mt-4">
       <div
-        className="col-md-6 mx-auto card p-4 bg-dark text-white "
+        className="col-md-5 mx-auto card p-4 bg-dark text-white "
         style={{ marginTop: "100px" }}
       >
         <form onSubmit={handleSubmit} style={{ textAlign: "initial" }}>
@@ -136,8 +136,8 @@ export default function SignUp() {
             />
           </div>
 
-          <div className="align-items-center">
-            <button type="submit" className="btn btn-primary mx-auto">
+          <div className="align-items-center" style={{ textAlign: "center" }}>
+            <button type="submit" className="btn btn-primary mx-auto" style={{width:"200px"}}>
               Sign Up
             </button>
           </div>

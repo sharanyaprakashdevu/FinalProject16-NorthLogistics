@@ -70,149 +70,151 @@ export default function AddStorage() {
   };
 
   return (
-    <div className="col-md-6 mx-auto mt-4 p-2 card bg-black text-white">
-      <Navbar />
+    <div className="container" style={{marginTop:"50px"}}>
+      <div className="col-md-6 mx-auto mt-4 p-4 card bg-black text-white">
+        <Navbar />
 
-      {isPaymentPage && (
-        <Payment
-          details={{ amount: Math.round(Math.random() * 100) }}
-          backTo={() => {
-            setIsPaymentPage(false);
-          }}
-          paymentSuccessCallback={(data) => {
-            handleSubmit();
-            setInvoiceData(data);
-            setInvoice(true);
-            setIsPaymentPage(false);
-          }}
-          paymentFailCallback={(err) => {
-            window.location.replace("./storage");
-          }}
-        />
-      )}
+        {isPaymentPage && (
+          <Payment
+            details={{ amount: Math.round(Math.random() * 100) }}
+            backTo={() => {
+              setIsPaymentPage(false);
+            }}
+            paymentSuccessCallback={(data) => {
+              handleSubmit();
+              setInvoiceData(data);
+              setInvoice(true);
+              setIsPaymentPage(false);
+            }}
+            paymentFailCallback={(err) => {
+              window.location.replace("./storage");
+            }}
+          />
+        )}
 
-      {!isPaymentPage && !isInvoice && (
-        <div style={{ width: "auto" ,textAlign:'initial'}}>
-          <form onSubmit={procedeToPay} style={{ width: "auto" }}>
-            <h3>Storage</h3>
+        {!isPaymentPage && !isInvoice && (
+          <div style={{ width: "auto", textAlign: "initial" }}>
+            <form onSubmit={procedeToPay} style={{ width: "auto" }}>
+              <h3>Book Storage</h3>
 
-            <div className="mb-3">
-              <label>First Name</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="First name"
-                required
-                //access values
-                value={fname}
-                onChange={(e) => {
-                  const regex = /^[a-zA-Z\s]+$/;
-                  const val = e.target.value;
-                  if (regex.test(val)) setfname(val);
-                  if (val.length == 0 && e.nativeEvent.data == null)
-                    setfname("");
-                }}
-              />
-            </div>
-
-            <div className="mb-3">
-              <label>Phone</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="First name"
-                required
-                //access values
-                value={phone}
-                onChange={(e) => {
-                  const phoneRegex = /^[0-9]+$/;
-                  if (phoneRegex.test(e.target.value) && phone.length <= 9)
-                    setphone(e.target.value);
-                }}
-              />
-            </div>
-
-            <div className="dropdown">
-              <label>Storage Type</label>
-              <div
-                className="dropdown-btn"
-                onClick={(e) => setSelectedStorage(!selectedStorage)}
-              >
-                {storageType}
-                <span className="fas fa-caret-down"></span>
-                <FontAwesomeIcon icon={faCaretDown} />
+              <div className="mb-3">
+                <label>First Name</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="First name"
+                  required
+                  //access values
+                  value={fname}
+                  onChange={(e) => {
+                    const regex = /^[a-zA-Z\s]+$/;
+                    const val = e.target.value;
+                    if (regex.test(val)) setfname(val);
+                    if (val.length == 0 && e.nativeEvent.data == null)
+                      setfname("");
+                  }}
+                />
               </div>
-              {selectedStorage && (
-                <div className="dropdown-content">
-                  {options.map((option) => (
-                    <div
-                      onClick={(e) => {
-                        setstorageType(option);
-                        setSelectedStorage(false);
-                      }}
-                      className="dropdown-item"
-                    >
-                      {option}
-                    </div>
-                  ))}
+
+              <div className="mb-3">
+                <label>Phone</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="First name"
+                  required
+                  //access values
+                  value={phone}
+                  onChange={(e) => {
+                    const phoneRegex = /^[0-9]+$/;
+                    if (phoneRegex.test(e.target.value) && phone.length <= 9)
+                      setphone(e.target.value);
+                  }}
+                />
+              </div>
+
+              <div className="dropdown">
+                <label>Storage Type</label>
+                <div
+                  className="dropdown-btn"
+                  onClick={(e) => setSelectedStorage(!selectedStorage)}
+                >
+                  {storageType}
+                  <span className="fas fa-caret-down"></span>
+                  <FontAwesomeIcon icon={faCaretDown} />
                 </div>
-              )}
-            </div>
+                {selectedStorage && (
+                  <div className="dropdown-content">
+                    {options.map((option) => (
+                      <div
+                        onClick={(e) => {
+                          setstorageType(option);
+                          setSelectedStorage(false);
+                        }}
+                        className="dropdown-item"
+                      >
+                        {option}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
 
-            <div className="mb-3">
-              <label>Dimensions</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="First name"
-                required
-                //access values
-                onChange={(e) => setdimensions(e.target.value)}
-              />
-            </div>
+              <div className="mb-3">
+                <label>Dimensions</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="First name"
+                  required
+                  //access values
+                  onChange={(e) => setdimensions(e.target.value)}
+                />
+              </div>
 
-            <div className="mb-3">
-              <label>Storage Date</label>
+              <div className="mb-3">
+                <label>Storage Date</label>
 
-              <input
-                type="date"
-                className="form-control"
-                placeholder="First name"
-                required
-                //access values
-                onChange={(e) => setstorageDate(e.target.value)}
-              />
-            </div>
+                <input
+                  type="date"
+                  className="form-control"
+                  placeholder="First name"
+                  required
+                  //access values
+                  onChange={(e) => setstorageDate(e.target.value)}
+                />
+              </div>
 
-            <div className="mb-3">
-              <label>Storage Duration</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="First name"
-                required
-                //access values
-                onChange={(e) => setstorageDuration(e.target.value)}
-              />
-            </div>
+              <div className="mb-3">
+                <label>Storage Duration</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="First name"
+                  required
+                  //access values
+                  onChange={(e) => setstorageDuration(e.target.value)}
+                />
+              </div>
 
-            <div className="d-grid">
-              <button type="submit" className="btn btn-primary">
-                Confirm Storage
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
+              <div className="d-grid">
+                <button type="submit" className="btn btn-primary">
+                  Confirm Storage
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
 
-      {isInvoice && (
-        <Invoice
-          invoice={invoiceData}
-          callback={() => {
-            window.location.replace("./storage");
-          }}
-        />
-      )}
+        {isInvoice && (
+          <Invoice
+            invoice={invoiceData}
+            callback={() => {
+              window.location.replace("./storage");
+            }}
+          />
+        )}
+      </div>
     </div>
   );
 }

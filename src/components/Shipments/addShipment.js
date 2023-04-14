@@ -85,174 +85,176 @@ export default function AddShipment() {
   };
 
   return (
-    <div className="col-md-6 mx-auto card border p-3 bg-dark text-white mt-4">
-      <Navbar />
+    <div className="container">
+      <div className="col-md-5 mx-auto card border p-3 bg-dark text-white" style={{marginTop:"60px"}}>
+        <Navbar />
 
-      {!isPaymentPage && !isInvoice && (
-        <div style={{ width: "auto", textAlign: "initial" }}>
-          <form onSubmit={procedeToPay} style={{ width: "auto" }}>
-            <h3>Shipment</h3>
+        {!isPaymentPage && !isInvoice && (
+          <div style={{ width: "auto", textAlign: "initial" }}>
+            <form onSubmit={procedeToPay} style={{ width: "auto" }}>
+              <h3>Shipment</h3>
 
-            <div className="mb-3">
-              <label>Name /Company Name *</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="First name"
-                required
-                value={fname}
-                //access values
-                onChange={(e) => {
-                  const regex = /^[a-zA-Z\s]+$/;
-                  const val = e.target.value;
-                  if (regex.test(val)) setfname(val);
-                  if (val.length == 0 && e.nativeEvent.data == null)
-                    setfname("");
-                }}
-              />
-            </div>
-
-            <div className="mb-3">
-              <label>Phone Number * </label>
-              <input
-                type="phone"
-                className="form-control"
-                placeholder="Contact Detail"
-                required
-                value={phone}
-                onChange={(e) => {
-                  const phoneRegex = /^[0-9]+$/;
-                  if (phoneRegex.test(e.target.value) && phone.length <= 9)
-                    setphone(e.target.value);
-                }}
-              />
-            </div>
-
-            <div className="mb-3">
-              <label>Address From</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Current Location"
-                required
-                value={addressFrom}
-                onChange={(e) => setaddressFrom(e.target.value)}
-              />
-            </div>
-
-            <div className="mb-3">
-              <label>Address To</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Current Location"
-                required
-                value={addressTo}
-                onChange={(e) => setaddressTo(e.target.value)}
-              />
-            </div>
-
-            <div className="dropdown">
-              <label>Select Shipment Type</label>
-              <div
-                className="dropdown-btn"
-                onClick={(e) => setshipmentType(!shipmentType)}
-              >
-                {selectedShip}
-                <span className="fas fa-caret-down"></span>
-                <FontAwesomeIcon icon={faCaretDown} />
+              <div className="mb-3">
+                <label>Name /Company Name *</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="First name"
+                  required
+                  value={fname}
+                  //access values
+                  onChange={(e) => {
+                    const regex = /^[a-zA-Z\s]+$/;
+                    const val = e.target.value;
+                    if (regex.test(val)) setfname(val);
+                    if (val.length == 0 && e.nativeEvent.data == null)
+                      setfname("");
+                  }}
+                />
               </div>
-              {shipmentType && (
-                <div className="dropdown-content" style={{ zIndex: 99 }}>
-                  {options.map((option) => (
-                    <div
-                      onClick={(e) => {
-                        setSelectedShip(option);
-                        setshipmentType(false);
-                      }}
-                      className="dropdown-item"
-                    >
-                      {option}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
 
-            <div className="dropdown">
-              <label>Select Service Type</label>
-              <div
-                className="dropdown-btn"
-                onClick={(e) => setserviceType(!serviceType)}
-              >
-                {selectedService}
-                <span className="fas fa-caret-down"></span>
-                <FontAwesomeIcon icon={faCaretDown} />
+              <div className="mb-3">
+                <label>Phone Number * </label>
+                <input
+                  type="phone"
+                  className="form-control"
+                  placeholder="Contact Detail"
+                  required
+                  value={phone}
+                  onChange={(e) => {
+                    const phoneRegex = /^[0-9]+$/;
+                    if (phoneRegex.test(e.target.value) && phone.length <= 9)
+                      setphone(e.target.value);
+                  }}
+                />
               </div>
-              {serviceType && (
-                <div className="dropdown-content" style={{ zIndex: 99 }}>
-                  {services.map((option) => (
-                    <div
-                      onClick={(e) => {
-                        setSelectedService(option);
-                        setserviceType(false);
-                      }}
-                      className="dropdown-item"
-                    >
-                      {option}
-                    </div>
-                  ))}
+
+              <div className="mb-3">
+                <label>Address From</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Current Location"
+                  required
+                  value={addressFrom}
+                  onChange={(e) => setaddressFrom(e.target.value)}
+                />
+              </div>
+
+              <div className="mb-3">
+                <label>Address To</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Current Location"
+                  required
+                  value={addressTo}
+                  onChange={(e) => setaddressTo(e.target.value)}
+                />
+              </div>
+
+              <div className="dropdown">
+                <label>Select Shipment Type</label>
+                <div
+                  className="dropdown-btn"
+                  onClick={(e) => setshipmentType(!shipmentType)}
+                >
+                  {selectedShip}
+                  <span className="fas fa-caret-down"></span>
+                  <FontAwesomeIcon icon={faCaretDown} />
                 </div>
-              )}
-            </div>
+                {shipmentType && (
+                  <div className="dropdown-content" style={{ zIndex: 99 }}>
+                    {options.map((option) => (
+                      <div
+                        onClick={(e) => {
+                          setSelectedShip(option);
+                          setshipmentType(false);
+                        }}
+                        className="dropdown-item"
+                      >
+                        {option}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
 
-            <div className="mb-3">
-              <label>Dimensions</label>
-              <input
-                type="text"
-                className="form-control"
-                required
-                value={dimensions}
-                placeholder="Enter height , width"
-                onChange={(e) => setdimensions(e.target.value)}
-              />
-            </div>
+              <div className="dropdown">
+                <label>Select Service Type</label>
+                <div
+                  className="dropdown-btn"
+                  onClick={(e) => setserviceType(!serviceType)}
+                >
+                  {selectedService}
+                  <span className="fas fa-caret-down"></span>
+                  <FontAwesomeIcon icon={faCaretDown} />
+                </div>
+                {serviceType && (
+                  <div className="dropdown-content" style={{ zIndex: 99 }}>
+                    {services.map((option) => (
+                      <div
+                        onClick={(e) => {
+                          setSelectedService(option);
+                          setserviceType(false);
+                        }}
+                        className="dropdown-item"
+                      >
+                        {option}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
 
-            <div className="d-grid">
-              <button type="submit" className="btn btn-primary">
-                Confirm Shipment
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
+              <div className="mb-3">
+                <label>Dimensions</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  required
+                  value={dimensions}
+                  placeholder="Enter height , width"
+                  onChange={(e) => setdimensions(e.target.value)}
+                />
+              </div>
 
-      {isPaymentPage && (
-        <Payment
-          details={{ amount: Math.round(Math.random() * 100) }}
-          backTo={() => {
-            setIsPaymentPage(false);
-          }}
-          paymentSuccessCallback={(data) => {
-            handleSubmit();
-            setInvoiceData(data);
-            setInvoice(true);
-            setIsPaymentPage(false);
-          }}
-          paymentFailCallback={(err) => {
-            window.location.replace("./addShipment");
-          }}
-        />
-      )}
+              <div className="d-grid">
+                <button type="submit" className="btn btn-primary">
+                  Confirm Shipment
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
 
-      {isInvoice && (
-        <Invoice
-          invoice={invoiceData}
-          callback={() => {
-            window.location.replace("./addShipment");
-          }}
-        />
-      )}
+        {isPaymentPage && (
+          <Payment
+            details={{ amount: Math.round(Math.random() * 100) }}
+            backTo={() => {
+              setIsPaymentPage(false);
+            }}
+            paymentSuccessCallback={(data) => {
+              handleSubmit();
+              setInvoiceData(data);
+              setInvoice(true);
+              setIsPaymentPage(false);
+            }}
+            paymentFailCallback={(err) => {
+              window.location.replace("./addShipment");
+            }}
+          />
+        )}
+
+        {isInvoice && (
+          <Invoice
+            invoice={invoiceData}
+            callback={() => {
+              window.location.replace("./addShipment");
+            }}
+          />
+        )}
+      </div>
     </div>
   );
 }
