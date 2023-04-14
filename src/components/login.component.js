@@ -46,53 +46,60 @@ export default class Login extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit} action="userPage.js">
-        <h3>Sign In</h3>
+      <div className="container mt-4">
+        <div
+          className="col-md-6 p-4 card bg-dark mx-auto text-white"
+          style={{ marginTop: "100px" }}
+        >
+          <form onSubmit={this.handleSubmit} style={{ textAlign: "initial" }}>
+            <h3>Sign In</h3>
 
-        <div className="mb-3">
-          <label>Email address</label>
-          <input
-            type="email"
-            className="form-control"
-            placeholder="Enter email"
-            required
-            onChange={(e) => this.setState({ email: e.target.value })}
-          />
-        </div>
+            <div className="mb-3">
+              <label>Email address</label>
+              <input
+                type="email"
+                className="form-control"
+                placeholder="Enter email"
+                required
+                onChange={(e) => this.setState({ email: e.target.value })}
+              />
+            </div>
 
-        <div className="mb-3">
-          <label>Password</label>
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Enter password"
-            required
-            onChange={(e) => this.setState({ password: e.target.value })}
-          />
-        </div>
+            <div className="mb-3">
+              <label>Password</label>
+              <input
+                type="password"
+                className="form-control"
+                placeholder="Enter password"
+                required
+                onChange={(e) => this.setState({ password: e.target.value })}
+              />
+            </div>
 
-        <div className="mb-3">
-          <div className="custom-control custom-checkbox">
-            <input
-              type="checkbox"
-              className="custom-control-input"
-              id="customCheck1"
-            />
-            <label className="custom-control-label" htmlFor="customCheck1">
-              Remember me
-            </label>
-          </div>
-        </div>
+            <div className="mb-3">
+              <div className="custom-control custom-checkbox">
+                <input
+                  type="checkbox"
+                  className="custom-control-input"
+                  id="customCheck1"
+                />
+                <label className="custom-control-label" htmlFor="customCheck1">
+                  Remember me
+                </label>
+              </div>
+            </div>
 
-        <div className="d-grid">
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
+            <div className="d-grid">
+              <button type="submit" className="btn btn-primary">
+                Submit
+              </button>
+            </div>
+            <p className="forgot-password text-right">
+              Forgot <a href="#">password?</a>
+            </p>
+          </form>
         </div>
-        <p className="forgot-password text-right">
-          Forgot <a href="#">password?</a>
-        </p>
-      </form>
+      </div>
     );
   }
 }
