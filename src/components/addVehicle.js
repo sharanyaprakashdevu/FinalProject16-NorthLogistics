@@ -118,7 +118,7 @@ export default function AddVehicle() {
             ""
           ) : (
             <div className="m-2 border-rounded">
-              <img width={100} height={100} src={image} />
+              <img width={150} height={100} src={image} />
             </div>
           )}
         </div>

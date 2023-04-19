@@ -174,7 +174,7 @@ export default function Parking() {
               </div>
 
               <div className="mb-3">
-                <label>Parking Duration in minutes</label>
+                <label>Parking Duration in hours</label>
                 <input
                   type="number"
                   className="form-control"

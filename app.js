@@ -488,8 +488,8 @@ const sendEmailNotification = (email, subject, text,debug=false) => {
     port: 465,
     secure: true, // use SSL
     auth: {
-      user: "4lightspacebetweenus@gmail.com",
-      pass: "sxhdrxscbcepvpvc",
+      user: "sharanyaprakash10@gmail.com",
+      pass: "kscsupfixoijqokt",
     },
   });
 
@@ -548,4 +548,5 @@ app.get("/sent_test_mail",async (req,res)=>{
 
 app.listen(5000, () => {
   console.log("Server Started");
+  //process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0
 });

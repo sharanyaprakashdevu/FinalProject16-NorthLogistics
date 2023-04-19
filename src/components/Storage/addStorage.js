@@ -121,7 +121,7 @@ export default function AddStorage() {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="First name"
+                  placeholder="Phone Number"
                   required
                   //access values
                   value={phone}
@@ -165,7 +165,7 @@ export default function AddStorage() {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="First name"
+                  placeholder="Enter Height,width"
                   required
                   //access values
                   onChange={(e) => setdimensions(e.target.value)}
@@ -178,7 +178,7 @@ export default function AddStorage() {
                 <input
                   type="date"
                   className="form-control"
-                  placeholder="First name"
+                  placeholder="Enter Date"
                   required
                   //access values
                   onChange={(e) => setstorageDate(e.target.value)}
@@ -190,7 +190,7 @@ export default function AddStorage() {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="First name"
+                  placeholder="Duration in mins"
                   required
                   //access values
                   onChange={(e) => setstorageDuration(e.target.value)}
